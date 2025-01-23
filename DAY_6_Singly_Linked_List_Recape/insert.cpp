@@ -12,7 +12,7 @@ public:
     }
 };
 
-void print_linked_list(Node *head)
+void print_linked_list(Node *head) //---O(N)
 {
     Node *tmp = head;
     while (tmp != NULL)
@@ -23,7 +23,7 @@ void print_linked_list(Node *head)
     cout << endl;
 }
 
-int size(Node *head)
+int size(Node *head) //---O(N)
 {
     Node *tmp = head;
     int count = 0;
@@ -35,7 +35,7 @@ int size(Node *head)
     return count;
 }
 
-void insert(Node *head, int pos, int val)
+void insert(Node *head, int pos, int val) //---O(N)
 {
     Node *newNode = new Node(val);
     Node *tmp = head;
@@ -46,6 +46,25 @@ void insert(Node *head, int pos, int val)
     newNode->next = tmp->next;
     tmp->next = newNode;
 }
+void insert_head(Node *&head, int val) //--->O(1)
+{
+    Node *newNode = new Node(val);
+    newNode->next = head;
+    head = newNode;
+}
+
+void insert_tail(Node *&head, Node *&tail, int val) //--->O(1)
+{
+    Node *newNode = new Node(val);
+    if (head == NULL)
+    {
+        head = newNode;
+        tail = newNode;
+        return;
+    }
+    tail->next = newNode;
+    tail = newNode;
+}
 int main()
 {
     Node *head = new Node(10);
@@ -53,6 +72,7 @@ int main()
     Node *b = new Node(30);
     Node *c = new Node(40);
     Node *d = new Node(50);
+    Node *tail = d;
 
     head->next = a;
     a->next = b;
@@ -60,18 +80,30 @@ int main()
     c->next = d;
 
     print_linked_list(head);
+    cout << "TAIL -> " << tail->val << endl;
 
     int pos, val;
     cin >> pos >> val;
-    
-    if(pos>size(head)){
-        cout<<"Invalid Index"<<endl;
+
+    if (pos > size(head))
+    {
+        cout << "Invalid Index" << endl;
     }
-    else{
-        insert(head,pos,val);
+    else if (pos == 0)
+    {
+        insert_head(head, val);
+    }
+    else if (pos == size(head))
+    {
+        insert_tail(head, tail, val);
+    }
+    else
+    {
+        insert(head, pos, val);
     }
 
     print_linked_list(head);
+    cout << "TAIL -> " << tail->val << endl;
 
     return 0;
 }
