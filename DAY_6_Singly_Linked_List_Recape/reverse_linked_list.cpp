@@ -11,16 +11,19 @@ public:
         this->next = NULL;
     }
 };
-
-void print_linked_list(Node *head)
+void print_recurtion(Node *n)
 {
-    Node *tmp = head;
-    while (tmp != NULL)
-    {
-        cout << tmp->val << " ";
-        tmp = tmp->next;
-    }
-    cout << endl;
+    if (n == NULL)
+        return;
+    cout << n->val << " ";
+    print_recurtion(n->next);
+}
+void print_reverse(Node *n)
+{
+    if (n == NULL)
+        return;
+    print_reverse(n->next);
+    cout << n->val << " ";
 }
 int main()
 {
@@ -35,7 +38,9 @@ int main()
     b->next = c;
     c->next = d;
 
-    print_linked_list(head);
+    print_recurtion(head);
+    cout << endl;
+    print_reverse(head);
 
     return 0;
 }

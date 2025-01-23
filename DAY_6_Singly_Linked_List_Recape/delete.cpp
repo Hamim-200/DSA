@@ -21,7 +21,18 @@ void print_linked_list(Node *head)
     }
     cout << endl;
 }
-void delete_node(Node *head, int pos)
+int size(Node *head) //---O(N)
+{
+    Node *tmp = head;
+    int count = 0;
+    while (tmp != NULL)
+    {
+        count++;
+        tmp = tmp->next;
+    }
+    return count;
+}
+void delete_node(Node *head, int pos) //---O(N)
 {
     Node *tmp = head;
     for (int i = 0; i < pos - 1; i++)
@@ -30,6 +41,12 @@ void delete_node(Node *head, int pos)
     }
     Node *deleteNode = tmp->next;
     tmp->next = tmp->next->next;
+    delete deleteNode;
+}
+void delete_head(Node *&head)
+{
+    Node *deleteNode = head;
+    head = head->next;
     delete deleteNode;
 }
 int main()
@@ -48,7 +65,20 @@ int main()
     print_linked_list(head);
     int pos;
     cin >> pos;
-    delete_node(head, pos);
+
+    if (pos >= size(head))
+    {
+        cout << "Invalid" << endl;
+    }
+    else if (pos == 0)
+    {
+        delete_head(head);
+    }
+    else
+    {
+        delete_node(head, pos);
+    }
+
     print_linked_list(head);
 
     return 0;
