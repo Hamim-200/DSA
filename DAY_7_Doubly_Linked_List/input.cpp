@@ -34,19 +34,31 @@ void print_reverse(Node *tail)
     }
     cout << endl;
 }
+void insert_tail(Node *&head, Node *&tail, int val)
+{
+    Node *newNode = new Node(val);
+    if (tail == NULL)
+    {
+        head = newNode;
+        tail = newNode;
+        return;
+    }
+    tail->next = newNode;
+    newNode->prev = tail;
+    tail = tail->next;
+}
 int main()
 {
-    Node *head = new Node(10);
-    Node *a = new Node(20);
-    Node *b = new Node(30);
-
-    // Connection
-    head->next = a;
-    a->prev = head;
-    a->next = b;
-    b->prev = a;
-    Node *tail = b;
-
+    Node *head = NULL;
+    Node *tail = NULL;
+    int val;
+    while (true)
+    {
+        cin >> val;
+        if (val == -1)
+            break;
+        insert_tail(head, tail, val);
+    }
     print_normal(head);
     print_reverse(tail);
 
